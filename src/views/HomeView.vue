@@ -3,18 +3,32 @@
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <Logo :show-text="!collapsed" />
 
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-sub-menu :key="idx" v-for="(menuItem, idx) in menu">
-          <template #icon>
-            <user-outlined />
-          </template>
-          <template #title>{{ menuItem.title }}</template>
-          <a-menu-item
-            :key="subIdx"
-            v-for="(subItem, subIdx) in menuItem.subMenu"
-            >{{ subItem.title }}</a-menu-item
-          >
-        </a-sub-menu>
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        v-model:openKeys="openKeys"
+        theme="dark"
+        mode="inline"
+      >
+        <template v-for="(menuItem, idx) in menu" :key="menuItem.title + idx">
+          <a-menu-item v-if="!menuItem.subMenu" :key="menuItem.title + idx">
+            <template #icon>
+              <PieChartOutlined />
+            </template>
+            {{ menuItem.title }}
+          </a-menu-item>
+          <a-sub-menu :key="idx" v-else>
+            <template #icon>
+              <user-outlined />
+            </template>
+            <template #title>{{ menuItem.title }}</template>
+            <a-menu-item
+              v-for="(subItem, subIdx) in menuItem.subMenu"
+              :key="menuItem.title + subIdx"
+              >{{ subItem.title }}</a-menu-item
+            >
+          </a-sub-menu>
+        </template>
+
         <!-- <video-camera-outlined />
         <upload-outlined /> -->
       </a-menu>
@@ -66,6 +80,7 @@ export default defineComponent({
     return {
       selectedKeys: ref<string[]>(["1"]),
       collapsed: ref<boolean>(false),
+      openKeys: ref<string[]>([]),
       menu: reactive(menuSetting),
     };
   },
