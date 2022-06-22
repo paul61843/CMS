@@ -10,7 +10,11 @@
         mode="inline"
       >
         <template v-for="(menuItem, idx) in menu" :key="menuItem.title + idx">
-          <a-menu-item v-if="!menuItem.subMenu" :key="menuItem.title + idx">
+          <a-menu-item
+            v-if="!menuItem.subMenu"
+            :key="menuItem.title + idx"
+            @click="toPage(menuItem.link)"
+          >
             <template #icon>
               <PieChartOutlined />
             </template>
@@ -24,6 +28,7 @@
             <a-menu-item
               v-for="(subItem, subIdx) in menuItem.subMenu"
               :key="menuItem.title + subIdx"
+              @click="toPage(subItem.link)"
               >{{ subItem.title }}</a-menu-item
             >
           </a-sub-menu>
@@ -54,7 +59,7 @@
           minHeight: '280px',
         }"
       >
-        Content
+        <router-view></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -66,9 +71,11 @@ import {
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
 import Logo from "@/components/navigation/Logo.vue";
-import menuSetting from "@/constants/menu.js";
+import menuSetting from "@/constants/menu/index.ts";
 
 import { defineComponent, ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+
 export default defineComponent({
   components: {
     UserOutlined,
@@ -77,11 +84,20 @@ export default defineComponent({
     Logo,
   },
   setup() {
+    const router = useRouter();
+
+    const toPage = (link: string | undefined) => {
+      if (!link) return;
+      router.push(link);
+    };
+
     return {
       selectedKeys: ref<string[]>(["1"]),
       collapsed: ref<boolean>(false),
       openKeys: ref<string[]>([]),
       menu: reactive(menuSetting),
+
+      toPage,
     };
   },
 });
