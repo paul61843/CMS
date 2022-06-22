@@ -2,6 +2,7 @@ import type { Menu } from "@/types/menu";
 
 const homeMenu: Menu = {
   title: "首頁",
+  link: "/",
 };
 
 const formMenu: Menu = {
@@ -33,6 +34,7 @@ const postMenu: Menu = {
   subMenu: [
     {
       title: "發表文章",
+      link: "/article/post",
     },
     {
       title: "修改文章",
