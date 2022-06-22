@@ -71,7 +71,7 @@ import {
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
 import Logo from "@/components/navigation/Logo.vue";
-import menuSetting from "@/constants/menu/index.ts";
+import menuSetting from "@/constants/menu/index.js";
 
 import { defineComponent, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
