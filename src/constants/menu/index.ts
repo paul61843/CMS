@@ -38,9 +38,11 @@ const postMenu: Menu = {
     },
     {
       title: "修改文章",
+      link: "/article/edit",
     },
     {
       title: "文章列表",
+      link: "/article/list",
     },
   ],
 };
