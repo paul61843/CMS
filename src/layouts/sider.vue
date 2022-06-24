@@ -44,7 +44,7 @@ import { defineComponent, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useGlobalStore } from "@/stores/global.js";
 import Logo from "@/components/navigation/Logo.vue";
-import menuSetting from "@/constants/menu/index.js";
+import menuSetting from "@/constants/navigation/index.js";
 import { storeToRefs } from "pinia";
 
 export default defineComponent({
