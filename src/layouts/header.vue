@@ -19,9 +19,8 @@ export default defineComponent({
     MenuFoldOutlined,
     MenuUnfoldOutlined,
   },
-  emits: ["changeCollapsed"],
 
-  setup(props, { emit }) {
+  setup() {
     const globalStore = useGlobalStore();
     const { collapsed } = storeToRefs(globalStore);
 
@@ -32,4 +31,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang=""></style>
