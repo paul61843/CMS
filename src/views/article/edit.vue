@@ -1,28 +1,13 @@
 <template>
   <a-table :columns="columns" :data-source="dataSource" bordered>
-    <template #bodyCell="{ column, text, record }">
-      <template v-if="['name', 'age', 'address'].includes(column.dataIndex)">
-        <div>
-          <a-input
-            v-if="editableData[record.key]"
-            v-model:value="editableData[record.key][column.dataIndex]"
-            style="margin: -5px 0"
-          />
-          <template v-else>{{ text }}</template>
-        </div>
+    <template #bodyCell="{ column, text }">
+      <template v-if="column.dataIndex !== 'operation'">
+        <div>{{ text }}</div>
       </template>
-      <template v-else-if="column.dataIndex === 'operation'">
+      <template v-else>
         <div class="editable-row-operations">
-          <span v-if="editableData[record.key]">
-            <a-typography-link @click="save(record.key)"
-              >Save</a-typography-link
-            >
-            <a-popconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
-              <a>Cancel</a>
-            </a-popconfirm>
-          </span>
-          <span v-else>
-            <a @click="edit(record.key)">Edit</a>
+          <span>
+            <a @click="edit()">Edit</a>
           </span>
         </div>
       </template>
@@ -74,20 +59,8 @@ export default defineComponent({
     const dataSource = ref(data);
     const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
 
-    const edit = (key: string) => {
-      editableData[key] = {
-        ...dataSource.value.filter((item) => key === item.key)[0],
-      };
-    };
-    const save = (key: string) => {
-      Object.assign(
-        dataSource.value.filter((item) => key === item.key)[0],
-        editableData[key]
-      );
-      delete editableData[key];
-    };
-    const cancel = (key: string) => {
-      delete editableData[key];
+    const edit = () => {
+      // TODO: show edit popup
     };
     return {
       dataSource,
@@ -95,8 +68,6 @@ export default defineComponent({
       editingKey: "",
       editableData,
       edit,
-      save,
-      cancel,
     };
   },
 });

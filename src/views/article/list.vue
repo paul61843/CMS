@@ -1,16 +1,7 @@
 <template>
   <a-table :columns="columns" :data-source="dataSource" bordered>
-    <template #bodyCell="{ column, text, record }">
-      <template v-if="['name', 'age', 'address'].includes(column.dataIndex)">
-        <div>
-          <a-input
-            v-if="editableData[record.key]"
-            v-model:value="editableData[record.key][column.dataIndex]"
-            style="margin: -5px 0"
-          />
-          <template v-else>{{ text }}</template>
-        </div>
-      </template>
+    <template #bodyCell="{ text }">
+      <div>{{ text }}</div>
     </template>
   </a-table>
 </template>
@@ -55,29 +46,11 @@ export default defineComponent({
     const dataSource = ref(data);
     const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
 
-    const edit = (key: string) => {
-      editableData[key] = {
-        ...dataSource.value.filter((item) => key === item.key)[0],
-      };
-    };
-    const save = (key: string) => {
-      Object.assign(
-        dataSource.value.filter((item) => key === item.key)[0],
-        editableData[key]
-      );
-      delete editableData[key];
-    };
-    const cancel = (key: string) => {
-      delete editableData[key];
-    };
     return {
       dataSource,
       columns,
       editingKey: "",
       editableData,
-      edit,
-      save,
-      cancel,
     };
   },
 });
