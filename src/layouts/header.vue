@@ -1,5 +1,8 @@
 <template>
-  <a-layout-header class="flex justify-between items-center px-4" style="background: #fff">
+  <a-layout-header
+    class="flex justify-between items-center px-4"
+    style="background: #fff"
+  >
     <menu-unfold-outlined
       v-if="collapsed"
       class="trigger"

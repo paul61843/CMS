@@ -43,7 +43,7 @@ import { PieChartOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { defineComponent, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useGlobalStore } from "@/stores/global";
-import Logo from "@/components/navigation/Logo.vue";
+import Logo from "@/components/sider/Logo.vue";
 import menuSetting from "@/constants/navigation/index";
 import { storeToRefs } from "pinia";
 
