@@ -41,9 +41,11 @@
 <script lang="ts">
 import { PieChartOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { defineComponent, ref, reactive } from "vue";
-import menuSetting from "@/constants/menu/index.js";
 import { useRouter } from "vue-router";
+import { useGlobalStore } from "@/stores/global.js";
 import Logo from "@/components/navigation/Logo.vue";
+import menuSetting from "@/constants/menu/index.js";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   components: {
@@ -51,16 +53,10 @@ export default defineComponent({
     PieChartOutlined,
     Logo,
   },
-
-  props: {
-    collapsed: {
-      type: Boolean,
-      defualt: false,
-    },
-  },
-
   setup() {
     const router = useRouter();
+    const globalStore = useGlobalStore();
+    const { collapsed } = storeToRefs(globalStore);
 
     const toPage = (link: string | undefined) => {
       if (!link) return;
@@ -71,6 +67,7 @@ export default defineComponent({
       selectedKeys: ref<string[]>(["1"]),
       openKeys: ref<string[]>([]),
       menu: reactive(menuSetting),
+      collapsed,
 
       toPage,
     };

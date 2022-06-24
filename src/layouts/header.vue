@@ -10,28 +10,24 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { storeToRefs } from "pinia";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
+import { useGlobalStore } from "@/stores/global.js";
 
 export default defineComponent({
   components: {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
   },
-  props: {
-    collapsed: {
-      type: Boolean,
-      default: false,
-    },
-  },
   emits: ["changeCollapsed"],
 
   setup(props, { emit }) {
-    const changeCollapsed = () => {
-      emit("changeCollapsed", !props.collapsed);
-    };
+    const globalStore = useGlobalStore();
+    const { collapsed } = storeToRefs(globalStore);
 
     return {
-      changeCollapsed,
+      collapsed,
+      changeCollapsed: globalStore.changeCollapsed,
     };
   },
 });

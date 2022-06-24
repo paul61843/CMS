@@ -1,11 +1,8 @@
 <template>
   <a-layout class="h-screen">
-    <app-sider :collapsed="collapsed"></app-sider>
+    <app-sider></app-sider>
     <a-layout>
-      <app-header
-        :collapsed="collapsed"
-        @changeCollapsed="collapsed = $event"
-      ></app-header>
+      <app-header></app-header>
       <app-content></app-content>
     </a-layout>
   </a-layout>
