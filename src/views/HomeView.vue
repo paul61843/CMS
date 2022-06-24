@@ -1,5 +1,5 @@
 <template>
-  <a-layout class="h-screen">
+  <a-layout class="min-h-screen">
     <app-sider></app-sider>
     <a-layout>
       <app-header></app-header>
