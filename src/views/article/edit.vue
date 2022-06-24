@@ -23,16 +23,28 @@ const columns = [
     title: "name",
     dataIndex: "name",
     width: "25%",
+    sorter: {
+      compare: (a, b) => (a.name > b.name ? 1 : -1),
+      multiple: 1,
+    },
   },
   {
     title: "age",
     dataIndex: "age",
     width: "15%",
+    sorter: {
+      compare: (a, b) => (a.age > b.age ? 1 : -1),
+      multiple: 2,
+    },
   },
   {
     title: "address",
     dataIndex: "address",
     width: "40%",
+    sorter: {
+      compare: (a, b) => (a.address > b.address ? 1 : -1),
+      multiple: 3,
+    },
   },
   {
     title: "operation",
@@ -50,7 +62,7 @@ for (let i = 0; i < 100; i++) {
   data.push({
     key: i.toString(),
     name: `Edrward ${i}`,
-    age: 32,
+    age: i,
     address: `London Park no. ${i}`,
   });
 }
@@ -61,6 +73,7 @@ export default defineComponent({
 
     const edit = () => {
       // TODO: show edit popup
+      alert("顯示編輯資料的 popup");
     };
     return {
       dataSource,

@@ -14,16 +14,28 @@ const columns = [
     title: "標題",
     dataIndex: "title",
     width: "60%",
+    sorter: {
+      compare: (a, b) => (a.title > b.title ? 1 : -1),
+      multiple: 1,
+    },
   },
   {
     title: "作者",
     dataIndex: "auther",
     width: "25%",
+    sorter: {
+      compare: (a, b) => (a.auther > b.auther ? 1 : -1),
+      multiple: 1,
+    },
   },
   {
     title: "時間",
     dataIndex: "time",
     width: "15%",
+    sorter: {
+      compare: (a, b) => (a.time > b.time ? 1 : -1),
+      multiple: 1,
+    },
   },
 ];
 export interface DataItem {
