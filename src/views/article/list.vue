@@ -1,12 +1,22 @@
 <template>
-  <a-table :columns="columns" :data-source="dataSource" bordered>
+  <a-form :layout="formState.layout" :model="formState" v-bind="formItemLayout">
+    <a-form-item>
+      <a-input-search
+        v-model:value="formState.search"
+        placeholder="input search text"
+        style="width: 200px"
+        @search="onSearch()"
+      />
+    </a-form-item>
+  </a-form>
+  <a-table :columns="columns" :data-source="filteredData" bordered>
     <template #bodyCell="{ text }">
       <div>{{ text }}</div>
     </template>
   </a-table>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, computed } from "vue";
 import type { UnwrapRef } from "vue";
 
 const columns = [
@@ -44,6 +54,12 @@ export interface DataItem {
   auther: number;
   time: string;
 }
+
+interface FormState {
+  layout: "horizontal" | "vertical" | "inline";
+  search: string;
+}
+
 const data: DataItem[] = [];
 for (let i = 0; i < 100; i++) {
   data.push({
@@ -55,14 +71,40 @@ for (let i = 0; i < 100; i++) {
 }
 export default defineComponent({
   setup() {
-    const dataSource = ref(data);
-    const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
+    const dataSource = data;
+    const searchValue = ref("");
+
+    const formState: UnwrapRef<FormState> = reactive({
+      layout: "horizontal",
+      search: "",
+    });
+
+    const formItemLayout = computed(() => {
+      const { layout } = formState;
+      return layout === "horizontal"
+        ? {
+            wrapperCol: { span: 14 },
+          }
+        : {};
+    });
+
+    const filteredData = computed(() => {
+      return searchValue.value === ""
+        ? dataSource
+        : dataSource.filter((item) => item.title.includes(formState.search));
+    });
+
+    const onSearch = () => {
+      searchValue.value = formState.search;
+    };
 
     return {
-      dataSource,
+      filteredData,
       columns,
-      editingKey: "",
-      editableData,
+      formState,
+      formItemLayout,
+
+      onSearch,
     };
   },
 });
